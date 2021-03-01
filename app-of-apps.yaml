@@ -1,21 +1,20 @@
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: prophet-journey
-  namespace: tools
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
+    name: ''
     namespace: tools
-    server: https://kubernetes.default.svc
-  project: default
+    server: 'https://kubernetes.default.svc'
   source:
-    path: tools
-    repoURL: https://github.com/rampadc/prophet-journey.git
+    path: .
+    repoURL: 'https://github.com/rampadc/prophet-journey'
     targetRevision: HEAD
+  project: default
   syncPolicy:
     automated:
-      selfHeal: true
       prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
