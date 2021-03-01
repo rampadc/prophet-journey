@@ -1,7 +1,0 @@
-spec:
-  destination:
-    # Install into the same cluster
-    server: https://kubernetes.default.svc
-  source:
-    repoURL: https://github.com/rampadc/prophet-journey
-    targetRevision: HEAD
