@@ -1,24 +1,21 @@
-##############
-# 🐙 Argo Sync Policy
-#############
-sync_policy_true: &sync_policy_true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prophet-journey
+  namespace: tools
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: tools
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: tools
+    repoURL: https://github.com/rampadc/prophet-journey.git
+    targetRevision: HEAD
   syncPolicy:
     automated:
-      prune: true
       selfHeal: true
-    syncOptions:
-    - Validate=true
-
-##############
-# 🛎 Argo App of Apps. Points to a repo which contains some helm stuff
-#############
-applications:
-  - name: prophet-journey
-    destination: tools
-    enabled: true
-    source: https://github.com/rampadc/prophet-journey.git
-    source_path: prophet-journey/
-    source_ref: main
-    sync_policy: *sync_policy_true
-    helm_values:
-      - values.yaml
+      prune: true
